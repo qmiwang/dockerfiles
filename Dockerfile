@@ -19,6 +19,7 @@ RUN pip install graphviz
 RUN apt-get install -y graphviz
 
 #image processing
+RUN pip install scipy
 RUN pip install -U scikit-image
 
 # expose 8888 as jupyter's default
