@@ -21,9 +21,13 @@ RUN apt-get install -y graphviz
 #image processing
 RUN pip install scipy
 RUN pip install -U scikit-image
+RUN pip install Flask
 
 # expose 8888 as jupyter's default
 EXPOSE 8888
+EXPOSE 8787
+EXPOSE 7777
+EXPOSE 9797
 
 # Set a seperated workspace as working directory
 WORKDIR /root/workspace
