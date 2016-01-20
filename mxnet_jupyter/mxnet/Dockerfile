@@ -1,5 +1,5 @@
-FROM kaixhin/mxnet
-#FROM kaixhin/cuda-mxnet:6.5
+#FROM kaixhin/mxnet
+FROM kaixhin/cuda-mxnet:7.0
 
 ENV REFRESHED_AT 2015-12-17
 
@@ -28,12 +28,18 @@ EXPOSE 8888
 EXPOSE 8787
 EXPOSE 7777
 EXPOSE 9797
+
 # Set a seperated workspace as working directory
 WORKDIR /root/workspace
 # Optionally expose the workspace to the host
 VOLUME ["/root/workspace"]
 
+# Add Tini.  Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
+ENV TINI_VERSION v0.8.4
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+RUN chmod +x /usr/bin/tini
+
+ENTRYPOINT ["/usr/bin/tini", "--"]
 # Run ipython defaultly
-ENTRYPOINT ["jupyter"]
 # Run notebook for ipython defaultly
-CMD ["notebook", "--ip=0.0.0.0", "--port=8888","--no-browser"]
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888","--no-browser"]
