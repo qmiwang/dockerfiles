@@ -1,5 +1,5 @@
-#FROM kaixhin/mxnet
-FROM kaixhin/cuda-mxnet:7.0
+FROM kaixhin/mxnet
+#FROM kaixhin/cuda-mxnet:7.0
 
 ENV REFRESHED_AT 2015-12-17
 
