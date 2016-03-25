@@ -40,6 +40,5 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/
 RUN chmod +x /usr/bin/tini
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
-# Run ipython defaultly
 # Run notebook for ipython defaultly
 CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888","--no-browser"]
