@@ -1,14 +1,14 @@
 FROM ubuntu:14.04
 MAINTAINER Jianyong Wang <wangjianyongscu@gmail.com>
 
-ENV REFRESHED_AT 2015-12-17
+ENV REFRESHED_AT 2016-05-05
 
 RUN apt-get update && apt-get install -y python-pip
 RUN pip install --upgrade pip
 
 # install ipython
 # install jupyter
-RUN pip install ipython jupyter
+RUN pip install ipython jupyter numpy scipy matplotlib scikit-image
 
 # expose 8888 as jupyter's default
 EXPOSE 8888

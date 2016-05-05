@@ -1,4 +1,4 @@
-FROM nvidia/cuda:7.5-cudnn4-devel
+FROM wjy/jupyter-cuda:v1
 MAINTAINER Jianyong Wang <wangjianyongscu@gmail.com>
 ENV REFRESHED_AT 2016-05-05
 
@@ -19,13 +19,6 @@ ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:$LD_LIBRARY_PATH
 RUN apt-get install -y python-numpy wget unzip
 ENV PYTHONPATH /mxnet/python
 
-RUN apt-get update && apt-get install -y python-pip
-RUN pip install --upgrade pip
-
-# install ipython
-# install jupyter
-RUN pip install ipython jupyter
-
 # plot figures
 RUN pip install matplotlib
 
@@ -34,9 +27,8 @@ RUN pip install graphviz
 # following command ensures the visualization of mx.viz.plot_network in ipython notebook
 RUN apt-get install -y graphviz
 
-#image processing
 RUN pip install scipy
-RUN pip install -U scikit-image
+RUN pip install scikit-image
 RUN pip install Flask
 
 # expose 8888 as jupyter's default
