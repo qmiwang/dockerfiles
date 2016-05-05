@@ -1,4 +1,4 @@
-FROM wjy/jupyter-cuda:v1
+FROM wangjianyong/jupyter-cuda:v1
 MAINTAINER Jianyong Wang <wangjianyongscu@gmail.com>
 ENV REFRESHED_AT 2016-05-05
 

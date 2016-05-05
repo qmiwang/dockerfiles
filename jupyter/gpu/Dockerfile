@@ -8,7 +8,11 @@ RUN pip install --upgrade pip
 
 # install ipython
 # install jupyter
-RUN pip install ipython jupyter numpy scipy matplotlib scikit-image
+RUN pip install ipython jupyter 
+
+RUN pip install numpy scipy 
+RUN pip install scikit-image
+RUN pip install matplotlib
 
 # expose 8888 as jupyter's default
 EXPOSE 8888
