@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 MAINTAINER Jianyong Wang <wangjianyongscu@gmail.com>
 
-ENV REFRESHED_AT 2017-05-10
+ENV REFRESHED_AT 2016-05-10
 
 RUN apt-get update && apt-get install -y python-pip
 RUN pip install --upgrade pip
