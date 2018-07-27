@@ -1,4 +1,5 @@
-FROM nvidia/cuda:7.5-cudnn4-devel
+FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
+#FROM nvidia/cuda:7.5-cudnn4-devel
 MAINTAINER Jianyong Wang <wangjianyongscu@gmail.com>
 
 ENV REFRESHED_AT 2016-05-05
@@ -23,6 +24,9 @@ RUN pip install matplotlib
 
 # expose 8888 as jupyter's default
 EXPOSE 8888
+EXPOSE 9999
+EXPOSE 7777
+EXPOSE 6006
 
 # Set a seperated workspace as working directory
 WORKDIR /root/workspace
