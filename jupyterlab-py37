@@ -35,7 +35,7 @@ RUN pip3 install \
   jupyterlab \
   numpy \
   scipy \
-  matplotlib \
+  matplotlib
 RUN pip3 install  pandas
 RUN pip3 install -U scikit-image
 
