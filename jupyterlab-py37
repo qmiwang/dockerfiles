@@ -1,0 +1,72 @@
+FROM ubuntu:18.04
+MAINTAINER Jianyong Wang <wangjianyongscu@gmail.com>
+
+RUN apt-get update
+RUN apt-get -y upgrade
+# curl/wget/git
+RUN apt-get install -y curl wget git tar
+
+# Python
+RUN apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev
+RUN cd /usr/src ; wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tar.xz ; tar -xf Python-3.7.3.tar.xz ; cd Python-3.7.3 ; ./configure ; make altinstall
+
+# be sure it's 3.7 and not 3.6
+RUN ! ls /usr/local/bin/python3.7 && ls /usr/src/Python-3.7.3/python && cp /usr/src/Python-3.7.3/python /usr/local/bin/python3.7 ; exit 0
+
+# replace python version to have 3.7.3 as default
+RUN rm -f /usr/bin/python
+RUN rm -f /usr/bin/python3
+RUN ln -s /usr/local/bin/python3.7 /usr/bin/python
+RUN ln -s /usr/local/bin/python3.7 /usr/bin/python3
+RUN ln -s /usr/local/bin/python3.7 /usr/local/bin/python
+RUN ln -s /usr/local/bin/python3.7 /usr/local/bin/python3
+
+# create links to pip3.7
+RUN ln -s /usr/local/bin/pip3.7 /usr/bin/pip
+RUN ln -s /usr/local/bin/pip3.7 /usr/bin/pip3
+RUN ln -s /usr/local/bin/pip3.7 /usr/local/bin/pip
+RUN ln -s /usr/local/bin/pip3.7 /usr/local/bin/pip3
+
+# pycodestyle
+RUN pip3 install pycodestyle==2.5
+
+RUN pip3 install \
+  ipython \
+  jupyterlab \
+  numpy \
+  scipy \
+  matplotlib \
+RUN pip3 install  pandas
+RUN pip3 install -U scikit-image
+
+# Set the locale
+RUN apt-get install -y locales
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+EXPOSE 8888
+EXPOSE 6006
+EXPOSE 7777
+EXPOSE 9999
+
+# Set a seperated workspace as working directory
+WORKDIR /root/workspace
+# Optionally expose the workspace to the host
+VOLUME ["/root/workspace"]
+
+# Add Tini.  Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
+ENV TINI_VERSION v0.8.4
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+RUN chmod +x /usr/bin/tini
+
+# Unset any password for jupyter by default
+# RUN mkdir -p ~/.jupyter && echo "c.NotebookApp.token = u''" >> ~/.jupyter/jupyter_notebook_config.py
+
+ENV SHELL bash
+
+ENTRYPOINT ["/usr/bin/tini", "--"]
+# Run ipython defaultly
+# Run notebook for ipython defaultly
+CMD ["jupyter-lab", "--ip=0.0.0.0", "--port=8888","--no-browser"]
